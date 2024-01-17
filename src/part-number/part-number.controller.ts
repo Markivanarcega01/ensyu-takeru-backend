@@ -27,9 +27,19 @@ export class PartNumberController {
         return this.partNumberService.update(id,updatePartNumberDto)
     }
 
-    @Delete(':id')
+    @Delete('archives/:id')
     deletePartNumberById(@Param('id',ParseIntPipe) id:number){
         return this.partNumberService.deleteById(id)
+    }
+
+    @Delete(':id')
+    softDeletePartNumber(@Param('id',ParseIntPipe) id:number){
+        return this.partNumberService.softDeleteById(id)
+    }
+
+    @Patch('archives/:id')
+    restorePartNumber(@Param('id',ParseIntPipe) id:number){
+        return this.partNumberService.restoreById(id)
     }
 
 }

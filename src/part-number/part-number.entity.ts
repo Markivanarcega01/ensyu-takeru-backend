@@ -1,5 +1,5 @@
 import { ChangePoint } from "src/change-point/change-point.entity"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 
 @Entity()
@@ -19,4 +19,10 @@ export class PartNumber{
 
     @OneToMany(()=> ChangePoint, (changePoint) => changePoint.part_number)
     change_points:[ChangePoint]
+
+    @UpdateDateColumn()
+    updatedDate: Date
+
+    @DeleteDateColumn()
+    deletedDate: Date
 }

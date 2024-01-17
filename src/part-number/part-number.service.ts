@@ -41,6 +41,10 @@ export class PartNumberService {
     }
 
     async update(id: number, partNumber: UpdatePartNumberDto): Promise<PartNumber | string> {
+        const ifPartNumberAlreadyExists = await this.partNumberRepository.existsBy({ id: id })
+        if (!ifPartNumberAlreadyExists) {
+            return 'Part number doest not exists'
+        }
         try {
             const updatePartNumber = await this.partNumberRepository.update(id, partNumber)
             //return await this.partNumberRepository.findOneByOrFail({ id: id })
@@ -56,6 +60,36 @@ export class PartNumberService {
             await this.partNumberRepository.delete(id)
 
             return deletedPartNumber
+        } catch (error) {
+            return `Part number does not exists with ${id}`
+        }
+    }
+
+    async softDeleteById(id: number): Promise<PartNumber | string> {
+        try {
+            const softDeletedPartNumber = await this.partNumberRepository.softDelete(id)
+             return await this.partNumberRepository.findOneOrFail({
+                where:{
+                    id:id
+                },
+                withDeleted:true
+             })
+            
+        } catch (error) {
+            return `Part number does not exists with ${id}`
+        }
+    }
+
+    async restoreById(id: number): Promise<PartNumber | string> {
+        try {
+            const restorePartNumber = await this.partNumberRepository.restore(id)
+             return await this.partNumberRepository.findOneOrFail({
+                where:{
+                    id:id
+                },
+                withDeleted:true
+             })
+            
         } catch (error) {
             return `Part number does not exists with ${id}`
         }
