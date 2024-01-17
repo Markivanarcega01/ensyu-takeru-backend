@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
 import { PartNumberService } from './part-number.service';
 import { CreatePartNumberDto } from './dto/create-number.input';
 import { UpdatePartNumberDto } from './dto/update-number.input';
@@ -22,7 +22,7 @@ export class PartNumberController {
         return this.partNumberService.create(createPartNumberDto)
     }
 
-    @Put(':id')
+    @Patch(':id')
     updatePartNumber(@Param('id',ParseIntPipe) id:number, @Body() updatePartNumberDto:UpdatePartNumberDto){
         return this.partNumberService.update(id,updatePartNumberDto)
     }

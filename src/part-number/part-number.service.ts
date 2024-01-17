@@ -43,9 +43,10 @@ export class PartNumberService {
     async update(id: number, partNumber: UpdatePartNumberDto): Promise<PartNumber | string> {
         try {
             const updatePartNumber = await this.partNumberRepository.update(id, partNumber)
-            return await this.partNumberRepository.findOneByOrFail({ id: id })
+            //return await this.partNumberRepository.findOneByOrFail({ id: id })
+            return 'Part number is updated'
         } catch (error) {
-            return `Error in updating the Part number with id ${id}`
+            return `Error in updating the Part number`
         }
     }
 
