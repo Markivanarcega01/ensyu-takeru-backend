@@ -13,7 +13,12 @@ export class ChangePointService {
     ) { }
 
     async findAll(): Promise<ChangePoint[]> {
-        return await this.changePointRepository.find()
+        return await this.changePointRepository.find({
+            relations:{
+                createdByUser:true,
+                part_number:true
+            }
+        })
     }
 
     async findById(id: number): Promise<ChangePoint | string> {
@@ -28,7 +33,7 @@ export class ChangePointService {
 
     async create(createChangeDto: CreateChangeDto): Promise<ChangePoint|string> {
         try {
-            const newEntry = this.changePointRepository.create({ ...createChangeDto, change_point: new Date()})
+            const newEntry = this.changePointRepository.create(createChangeDto)
             return await this.changePointRepository.save(newEntry)
         } catch (error) {
             return 'Error in creating an change point entry'

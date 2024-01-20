@@ -29,7 +29,7 @@ export class UserService {
         try {
             return await this.userRepository.findOneByOrFail(credentials)
         } catch (error) {
-            return `Cannot find user with user: ${credentials.username}`
+            return `Invalid credentials: ${credentials.username}`
         }
     }
 

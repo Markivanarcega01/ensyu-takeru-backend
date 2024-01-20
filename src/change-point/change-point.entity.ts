@@ -1,6 +1,6 @@
 import { PartNumber } from "src/part-number/part-number.entity"
 import { User } from "src/user/user.entity"
-import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 @Entity()
 export class ChangePoint{
@@ -12,31 +12,40 @@ export class ChangePoint{
     part_number:PartNumber
 
     @ManyToOne(()=> User, (user)=> user.entries)
-    user_id:User
+    createdByUser:User
 
-    @Column()
+    @ManyToOne(()=>User, (user)=> user.deletes)
+    deletedByUser:User
+
+    @Column() //string
     etr_formula_code:string
 
-    @Column()
+    @Column() //seconds
     curing_time:number
 
-    @Column()
-    setting_temp:number
+    @Column() //celcius
+    setting_temp_high:number
 
-    @Column()
-    actual_temp:number
+    @Column() //celcius
+    setting_temp_low:number
 
-    @Column()
+    @Column() //celcius
+    actual_temp_high:number
+
+    @Column() //celcius
+    actual_temp_low:number
+
+    @Column() //created date
     change_point:Date
 
-    @Column()
-    initial_trial:string
+    @Column() // date
+    initial_trial:Date
 
     @Column()
     comment_trial:string
 
-    @Column()
-    mass_production:string
+    @Column() //date
+    mass_production:Date
 
     @Column()
     remarks:string

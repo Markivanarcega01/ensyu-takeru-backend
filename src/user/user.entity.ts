@@ -21,7 +21,10 @@ export class User{
     @Column()
     position:UserRole
 
-    @OneToMany(()=> ChangePoint, (changePoint) => changePoint.user_id)
+    @OneToMany(()=> ChangePoint, (changePoint) => changePoint.createdByUser)
     entries:[ChangePoint]
+
+    @OneToMany(()=> ChangePoint, (changePoint) => changePoint.deletedByUser)
+    deletes:[ChangePoint]
 
 }
